@@ -4,7 +4,7 @@ import './index.less';
 import lake from './lake.jpg';
 
 function App() {
-    const [Component,setComponent] = useState(null);
+    const [Component, setComponent] = useState(null);
     const onClick = () => {
         import('./Text.jsx').then((res) => {
             console.log(res.default)
@@ -13,8 +13,8 @@ function App() {
     }
     return <div>
         {Component ? Component : null}
-        <img src={lake} alt="" onClick={onClick}/>
+        <img src={lake} alt='' onClick={onClick}/>
     </div>
 }
 
-ReactDOM.render(<App/>,document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById('root'))

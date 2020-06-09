@@ -13,8 +13,8 @@ const devConfig = {
     devServer: {
         contentBase: './dist',
         hot: true,
-        stats: 'errors-only',
+        stats: 'errors-only'
     },
-    devtool: 'source-map',
+    devtool: 'source-map'
 };
 module.exports = merge(baseConfig, devConfig);
