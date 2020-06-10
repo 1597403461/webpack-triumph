@@ -689,6 +689,21 @@ module.exports = {
 // 三个方法比较：方法三更加推荐，主要分离基础包react、react-dom等；方法二必须还得为每个库指定CDN；
 ```
 
+### 提升二次构建速度
+
+此方式是webpack DllPlugin配置的替代方案
+
+`cnpm i hard-source-webpack-plugin -D`
+
+```js
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+module.exports = {
+    plugins: [
+        new HardSourceWebpackPlugin()
+    ]
+}
+```
+
 ### tree shaking 摇树优化
 
 摇树优化指代代码中没有用到的内容在生产环境自动删除
@@ -771,4 +786,44 @@ module.exports = {
 
 ### 构建异常和中断处理
 
-## 构建配置抽离成npm包
+### 多线程/多进程构建提升打包速度
+
+```js
+// npm i thread-loader -D
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js|jsx$/,
+        use: [
+          {
+            loader: "thread-loader",
+            options: {
+              workers: 3
+            } // 必须在最前面
+          },
+          "babel-loader",
+          "eslint-loader"
+        ]
+      }
+    ]
+  }
+};
+```
+
+### 多进程并行压缩代码提升打包速度
+
+webpack生产环境默认开启`terser-webpack-plugin`
+
+### 分析 webpack 的构建体积
+
+安装`npm i webpack-bundle-analyzer -D`
+
+```js
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+module.exports = {
+  plugins: [new BundleAnalyzerPlugin()]
+};
+```
+
+配置完成执行打包命令自动打开页面显示各文件的构建体积

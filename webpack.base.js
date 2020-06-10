@@ -1,6 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');const setMPA = require('./utils/setMPA');
+const friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const setMPA = require('./utils/setMPA');
 
 const { entry, htmlWebpackPlugins } = setMPA();
 
@@ -10,7 +11,15 @@ module.exports = {
         rules: [
             {
                 test: /\.js|jsx$/,
-                use: 'babel-loader'
+                use: [
+                    {
+                        loader: 'thread-loader',
+                        options: {
+                            workers: 3
+                        } // 必须在最前面
+                    },
+                    'babel-loader'
+                ]
             },
             {
                 test: /\.css$/,
