@@ -691,6 +691,8 @@ module.exports = {
 
 ### 提升二次构建速度
 
+webpack5中会内置hard-source-webpack-plugin
+
 此方式是webpack DllPlugin配置的替代方案
 
 `cnpm i hard-source-webpack-plugin -D`
@@ -787,6 +789,8 @@ module.exports = {
 ### 构建异常和中断处理
 
 ### 多线程/多进程构建提升打包速度
+
+thread-loader 和 happypack 对于小型项目来说打包速度几乎没有影响，甚至可能会增加开销，所以建议尽量在大项目中采用。
 
 ```js
 // npm i thread-loader -D
