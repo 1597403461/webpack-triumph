@@ -4,6 +4,8 @@ webpack的学习总结记录
 
 ## 摘要
 
+webpack 是一个现代 JavaScript 应用程序的静态模块打包器
+
 webpack的默认配置文件是webpack.config.js
 
 可通过webpack --config指定配置文件
@@ -428,7 +430,7 @@ module.exports = {
   ]
 };
 //html压缩
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
@@ -831,3 +833,35 @@ module.exports = {
 ```
 
 配置完成执行打包命令自动打开页面显示各文件的构建体积
+
+## 如何优化webpack的构建速度
+
+1. 使用高版本的webpack和node.js
+2. 多进程/多实例打包： happyPack（暂停维护）、thread-loader
+3. 代码压缩:
+    webpack-paralle-uglify-plugin
+    uglifyjs-webpack-plugin 开启 parallel 参数 (不支持ES6)
+    terser-webpack-plugin（webpack生产环境默认开启）
+4. 图片压缩
+    使用基于 Node 库的 imagemin (很多定制选项、可以处理多种图片格式)
+    配置 image-webpack-loader
+5. 缩小打包作用域:
+    exclude/include (确定 loader 规则范围)
+    resolve.modules 指明第三方模块的绝对路径 (减少不必要的查找)
+    合理使用alias
+6. 提取公共资源
+    使用 html-webpack-externals-plugin，将基础包通过 CDN 引入，不打入 bundle 中
+    使用 SplitChunksPlugin 进行(公共脚本、基础包、页面公共文件)分离(Webpack4内置) ，替代了 CommonsChunkPlugin 插件
+    预编译资源模块
+7. 预编译资源模块,基础包的分离
+    使用 DllPlugin 进行分包，使用 DllReferencePlugin(索引链接) 对 manifest.json 引用，让一些基本不会改动的代码先打包成静态资源，避免反复编译浪费时间。
+    HashedModuleIdsPlugin 可以解决模块数字id问题
+8. 充分利用缓存提升二次构建速度
+    babel-loader 开启缓存
+    terser-webpack-plugin 开启缓存
+    使用hard-source-webpack-plugin（此方式是webpack DllPlugin配置的替代方案，webpack5中会内置hard-source-webpack-plugin）
+9. 动态Polyfill
+    建议采用 polyfill-service 只给用户返回需要的polyfill，社区维护。(部分国内奇葩浏览器UA可能无法识别，但可以降级返回所需全部polyfill)
+10. tree shaking 摇树优化
+    摇树优化指代代码中没有用到的内容在生产环境自动删除
+    webpack默认支持，webpack的mode参数可配置tree shaking

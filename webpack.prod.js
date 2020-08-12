@@ -24,7 +24,7 @@ const prodConfig = {
         // new AddAssetHtmlPlugin({
         //     filepath: path.resolve(__dirname, 'build/library/*.dll.js')
         // }),
-        new HardSourceWebpackPlugin(),
+        new HardSourceWebpackPlugin()
         // new BundleAnalyzerPlugin()
     ]
     // stats: "errors-only"

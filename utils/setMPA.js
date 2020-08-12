@@ -1,11 +1,11 @@
 // 多页面打包封装入口函数
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const glob = require("glob");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const glob = require('glob');
 const path = require('path');
 const setMPA = () => {
     const entry = {};
     const htmlWebpackPlugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "../src/*/index.jsx"));
+    const entryFiles = glob.sync(path.join(__dirname, '../src/*/index.jsx'));
     Object.keys(entryFiles).map((index) => {
         const entryFile = entryFiles[index];
         // '/Users/cpselvis/my-project/src/index/index.js'
@@ -26,7 +26,7 @@ const setMPA = () => {
                     preserveLineBreaks: false,
                     minifyCSS: true,
                     minifyJS: true,
-                    removeComments: false,
+                    removeComments: false
                 }
             })
         );
@@ -34,7 +34,7 @@ const setMPA = () => {
 
     return {
         entry,
-        htmlWebpackPlugins,
+        htmlWebpackPlugins
     };
 };
 
