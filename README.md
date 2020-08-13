@@ -252,6 +252,7 @@ babel 的配置文件是.babelrc
     ```
 
     问题: 此时的 polyfill 是完整全部导入导致文件太大，而且此方式打包污染全局变量，需要实现按需加载所需 polyfill 内容，避免引入无用代码并且防止污染全局
+
     解决方法1: @babel/preset-env 提供了一个 useBuiltIns 参数，设置值为 usage 时，就只会包含代码需要的 polyfill，但是配置此参数的值为 usage ，必须要同时设置 corejs， 安装依赖`npm install --save core-js@3`
 
     ```js
