@@ -3,5 +3,13 @@
         "@babel/preset-env",
         "@babel/preset-react" //增加react的babel preset配置
     ],
-    "plugins":["@babel/plugin-syntax-dynamic-import"],
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import",
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "corejs": 3
+            }
+        ]
+    ]
 }
